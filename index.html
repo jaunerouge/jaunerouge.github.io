@@ -3,81 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anti-Design Jaune Rouge</title>
+    <title>JAUNE ROUGE - Anti-Design</title>
     <style>
-        /* STYLE ANTI-DESIGN */
+        /* STYLE GLOBAL */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: white; /* Fond blanc par défaut */
+            background-color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            cursor: crosshair; /* Curseur style brut */
+            cursor: crosshair;
             overflow: hidden;
             transition: background-color 0.05s;
+            font-family: 'Arial Black', sans-serif;
         }
 
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* Espacement minimaliste */
+            justify-content: space-between;
+            height: 90vh; /* Prend presque toute la hauteur */
+            width: 100%;
         }
 
-        img {
-            max-width: 80%;
+        /* Style des blocs SVG */
+        .svg-block {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            width: 80%;
             height: auto;
-            display: block;
-            image-rendering: pixelated; /* Pour garder le côté brut */
         }
 
-        /* STROBOSCOPE */
+        /* ANIMATION STROBOSCOPE */
         .strobe-active {
-            animation: strobe-animation 0.1s infinite;
+            animation: strobe-animation 0.08s infinite;
         }
 
         @keyframes strobe-animation {
-            0% { background-color: #f5bb00; }  /* Jaune */
+            0% { background-color: #f5bb00; } /* Jaune */
             50% { background-color: #bf3100; } /* Rouge */
             100% { background-color: #f5bb00; }
         }
 
-        /* Suppression de la sélection de texte pour le côté brut */
-        * {
-            user-select: none;
+        /* Texte d'instruction discret en bas */
+        .hint {
+            position: fixed;
+            bottom: 10px;
+            font-size: 10px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.3;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- SVG 3 : LE CRÂNE (TOP) -->
-        <img src="skull.svg" alt="Skull">
+        
+        <!-- 1. LE CRÂNE ET LE SERPENT (TOP) -->
+        <div class="svg-block">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Crâne Brutaliste -->
+                <path d="M50 80 C50 30 150 30 150 80 C150 120 130 140 130 160 H70 C70 140 50 120 50 80" fill="black"/>
+                <circle cx="75" cy="85" r="15" fill="white"/>
+                <circle cx="125" cy="85" r="15" fill="white"/>
+                <rect x="85" y="140" width="10" height="15" fill="white"/>
+                <rect x="105" y="140" width="10" height="15" fill="white"/>
+                <!-- Serpent -->
+                <path d="M30 150 Q70 100 110 150 T190 150" stroke="#f5bb00" stroke-width="8" fill="none" />
+                <path d="M185 145 L195 150 L185 155 Z" fill="#f5bb00" />
+            </svg>
+        </div>
 
-        <!-- SVG 2 : LE TEXTE JAUNE ROUGE (MIDDLE) -->
-        <img src="text.svg" alt="Jaune Rouge">
+        <!-- 2. LE TEXTE "JAUNE ROUGE" (MIDDLE) -->
+        <div class="svg-block">
+            <svg viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" 
+                      font-family="Arial Black" font-size="50" fill="black" 
+                      style="letter-spacing: -2px;">JAUNE ROUGE</text>
+            </svg>
+        </div>
 
-        <!-- SVG 1 : LE CHARDON (BOTTOM) -->
-        <img src="thistle.svg" alt="Thistle">
+        <!-- 3. LE CHARDON (BOTTOM) -->
+        <div class="svg-block">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Tige et feuilles piquantes -->
+                <path d="M100 180 L100 100" stroke="black" stroke-width="4"/>
+                <path d="M100 150 L70 130 M100 160 L130 140" stroke="black" stroke-width="4"/>
+                <!-- Tête du chardon -->
+                <circle cx="100" cy="80" r="40" fill="#bf3100"/>
+                <path d="M70 60 L130 60 L100 20 Z" fill="#f5bb00"/>
+                <path d="M60 80 L140 80 L100 40 Z" fill="#f5bb00" opacity="0.7"/>
+            </svg>
+        </div>
+
     </div>
+
+    <div class="hint">Click to trigger</div>
 
     <script>
         const body = document.body;
         let isStrobe = false;
 
-        // Fonction pour activer/désactiver le stroboscope au clic
+        // Active/Désactive le stroboscope
         window.addEventListener('click', () => {
             if (!isStrobe) {
                 body.classList.add('strobe-active');
                 isStrobe = true;
             } else {
                 body.classList.remove('strobe-active');
-                body.style.backgroundColor = "white"; // Retour au blanc
+                body.style.backgroundColor = "white";
                 isStrobe = false;
+            }
+        });
+
+        // Optionnel : Arrêter avec la touche Espace
+        window.addEventListener('keydown', (e) => {
+            if (e.code === "Space") {
+                body.classList.toggle('strobe-active');
             }
         });
     </script>
