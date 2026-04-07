@@ -20,7 +20,7 @@
             transition: background-color 0.05s;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* S'assure que la zone cliquable prend tout l'écran */
+            min-height: 100vh;
         }
 
         .main-container {
@@ -35,7 +35,7 @@
             display: flex;
             justify-content: center;
             overflow: hidden;
-            line-height: 0; /* Évite les espaces blancs sous les images */
+            line-height: 0;
         }
 
         img {
@@ -45,8 +45,9 @@
             display: block;
         }
 
-        /* SKULL VIBRANT */
-        .skull img {
+        /* VIBRATION (Désactivée par défaut, activée uniquement avec le stroboscope) */
+        .strobe-active .skull img,
+        .strobe-active .thistle img {
             animation: vibrate 0.15s infinite;
         }
 
@@ -74,7 +75,7 @@
 <body>
 
     <div class="main-container">
-        <!-- SKULL VIBRANT (TOP) -->
+        <!-- SKULL (TOP) -->
         <div class="section skull">
             <img src="skull.svg" alt="Skull">
         </div>
@@ -85,7 +86,7 @@
         </div>
 
         <!-- THISTLE (BAS) -->
-        <div class="section">
+        <div class="section thistle">
             <img src="thistle.svg" alt="Thistle">
         </div>
     </div>
@@ -94,7 +95,6 @@
         const body = document.body;
         let isStrobe = false;
         
-        // Active/Désactive le Strobe au clic n'importe où sur la page
         window.addEventListener('click', () => {
             isStrobe = !isStrobe;
             if (isStrobe) {
