@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Design Jaune Rouge</title>
+    <style>
+        /* STYLE ANTI-DESIGN */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white; /* Fond blanc par défaut */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: crosshair; /* Curseur style brut */
+            overflow: hidden;
+            transition: background-color 0.05s;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Espacement minimaliste */
+        }
+
+        img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            image-rendering: pixelated; /* Pour garder le côté brut */
+        }
+
+        /* STROBOSCOPE */
+        .strobe-active {
+            animation: strobe-animation 0.1s infinite;
+        }
+
+        @keyframes strobe-animation {
+            0% { background-color: #f5bb00; }  /* Jaune */
+            50% { background-color: #bf3100; } /* Rouge */
+            100% { background-color: #f5bb00; }
+        }
+
+        /* Suppression de la sélection de texte pour le côté brut */
+        * {
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- SVG 3 : LE CRÂNE (TOP) -->
+        <img src="skull.svg" alt="Skull">
+
+        <!-- SVG 2 : LE TEXTE JAUNE ROUGE (MIDDLE) -->
+        <img src="text.svg" alt="Jaune Rouge">
+
+        <!-- SVG 1 : LE CHARDON (BOTTOM) -->
+        <img src="thistle.svg" alt="Thistle">
+    </div>
+
+    <script>
+        const body = document.body;
+        let isStrobe = false;
+
+        // Fonction pour activer/désactiver le stroboscope au clic
+        window.addEventListener('click', () => {
+            if (!isStrobe) {
+                body.classList.add('strobe-active');
+                isStrobe = true;
+            } else {
+                body.classList.remove('strobe-active');
+                body.style.backgroundColor = "white"; // Retour au blanc
+                isStrobe = false;
+            }
+        });
+    </script>
+</body>
+</html>
