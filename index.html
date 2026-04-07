@@ -5,101 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JAUNE ROUGE</title>
     <style>
-        /* RESET & ANTI-DESIGN */
+        /* ANTI-DESIGN: RAW, NO MARGINS, NO LIMITS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* Curseur Œil personnalisé */
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M16 8C10 8 4 16 4 16s6 8 12 8 12-8 12-8-6-8-12-8zm0 13a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" fill="black" stroke="white" stroke-width="1"/></svg>') 16 16, auto;
+            user-select: none;
+            /* GOTHIC EYEBALL CURSOR */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M20 10C10 10 2 20 2 20s8 10 18 10 18-10 18-10-8-10-18-10zm0 16a6 6 0 1 1 0-12 6 6 0 0 1 0 12z" fill="black" stroke="white" stroke-width="1"/><circle cx="20" cy="20" r="3" fill="black"/><path d="M20 5v3M20 32v3M32 10l-2 2M10 30l-2 2M32 30l-2-2M10 10l2 2" stroke="black" stroke-width="2" stroke-linecap="round"/></svg>') 20 20, auto;
         }
 
         body, html {
             width: 100%;
             height: 100%;
             background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            overflow-x: hidden; /* Prevent horizontal scroll */
             transition: background-color 0.05s;
         }
 
+        /* Container stretches to full width */
         .main-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            width: 100vw; 
             align-items: center;
-            height: 90vh;
-            width: 100%;
-            padding: 40px 0;
         }
 
-        .svg-wrap {
+        /* Each section takes 100% width, no gaps */
+        .section {
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
         }
 
-        /* Tailles des éléments */
-        .skull { height: 30%; }
-        .text-logo { height: 20%; }
-        .thistle { height: 30%; }
-
+        /* FORCING FULL WIDTH ART */
         img {
-            max-height: 100%;
-            max-width: 90%;
-            object-fit: contain;
+            width: 100%;    /* Fills the horizontal space */
+            height: auto;   /* Maintains aspect ratio */
+            display: block; /* Removes bottom spacing */
         }
 
-        /* ANIMATION STROBOSCOPE */
+        /* STROBE EFFECT (Yellow #f5bb00 / Red #bf3100) */
         .strobe-active {
             animation: strobe-animation 0.06s infinite;
         }
 
         @keyframes strobe-animation {
-            0% { background-color: #f5bb00; } /* Jaune */
-            50% { background-color: #bf3100; } /* Rouge */
+            0% { background-color: #f5bb00; }
+            50% { background-color: #bf3100; }
             100% { background-color: #f5bb00; }
         }
 
-        /* Email en bas (Optionnel) */
-        .footer-mail {
-            position: fixed;
-            bottom: 20px;
-            font-family: 'Times New Roman', serif;
-            font-size: 14px;
-            color: black;
-        }
+        /* Specific padding for "Anti-design" look */
+        .skull { padding-top: 20px; }
+        .thistle { padding-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <!-- 1. SKULL (TOP) -->
-        <div class="svg-wrap skull">
-            <img src="https://raw.githubusercontent.com/jaunerouge/jaunerouge.github.io/main/skull.svg" alt="Skull">
+        <!-- TOP: SKULL -->
+        <div class="section skull">
+            <img src="skull.svg" alt="Skull">
         </div>
 
-        <!-- 2. TEXTE JAUNE ROUGE (MIDDLE) -->
-        <div class="svg-wrap text-logo">
-            <img src="https://raw.githubusercontent.com/jaunerouge/jaunerouge.github.io/main/text.svg" alt="Jaune Rouge">
+        <!-- MIDDLE: TEXT -->
+        <div class="section text-logo">
+            <img src="text.svg" alt="Jaune Rouge">
         </div>
 
-        <!-- 3. THISTLE (BOTTOM) -->
-        <div class="svg-wrap thistle">
-            <img src="https://raw.githubusercontent.com/jaunerouge/jaunerouge.github.io/main/thistle.svg" alt="Thistle">
+        <!-- BOTTOM: THISTLE -->
+        <div class="section thistle">
+            <img src="thistle.svg" alt="Thistle">
         </div>
     </div>
-
-    <div></div>
 
     <script>
         const body = document.body;
         let isStrobe = false;
 
-        // Clic pour activer/désactiver
         window.addEventListener('click', () => {
             isStrobe = !isStrobe;
             if (isStrobe) {
