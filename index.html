@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JAUNE ROUGE</title>
     <style>
-        /* RESET TOTAL */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* HIDE THE REAL MOUSE */
-            cursor: none !important;
+            /* CURSEUR GUN - Le point de tir (clic) est réglé sur le bout du canon (28 8) */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M4 8 h24 v6 h-4 l-2 10 h-6 l1 -10 h-13 z" fill="black" stroke="white" stroke-width="1"/></svg>') 28 8, auto;
         }
 
         body, html {
@@ -19,25 +18,11 @@
             background-color: white;
             overflow-x: hidden;
             transition: background-color 0.05s;
-        }
-
-        /* --- THE NEW BIG CURSOR --- */
-        #custom-cursor {
-            position: fixed;
-            width: 100px; /* <--- CHANGE THIS TO MAKE IT EVEN BIGGER */
-            height: 100px;
-            background-image: url('pointer.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none; /* Allows you to click through the image */
-            z-index: 9999;
-            transform: translate(-50%, -50%); /* Centers the image on the tip of the mouse */
-        }
-
-        /* CONTENEUR PRINCIPAL */
-        .content {
             display: flex;
             flex-direction: column;
+        }
+
+        .main-container {
             width: 100vw;
         }
 
@@ -45,133 +30,128 @@
             width: 100vw;
             display: flex;
             justify-content: center;
-            align-items: center;
             overflow: hidden;
-            line-height: 0;
         }
 
         img {
             width: 100%;
             height: auto;
             display: block;
-            transform: scale(1.1); 
         }
 
-        /* EFFET 1 : VIBRATION (SKULL) */
-        .vibrate {
-            animation: glitch 0.15s infinite;
-        }
-        @keyframes glitch {
-            0% { transform: scale(1.1) translate(0); }
-            20% { transform: scale(1.1) translate(-5px, 5px); }
-            40% { transform: scale(1.1) translate(-5px, -5px); }
-            60% { transform: scale(1.1) translate(5px, 5px); }
-            80% { transform: scale(1.1) translate(5px, -5px); }
-            100% { transform: scale(1.1) translate(0); }
+        /* 1. VIBRATING SKULL (Aggressive) */
+        .skull img {
+            animation: vibrate 0.15s infinite;
         }
 
-        /* EFFET 2 : MARQUEE */
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        /* 2. MARQUEE SCROLL (90s Style) */
         .marquee-container {
-            width: 100vw;
-            background: #000;
-            color: #fff;
+            width: 100%;
             overflow: hidden;
-            white-space: nowrap;
+            background: black;
+            color: white;
             padding: 15px 0;
-            font-family: 'Courier New', monospace;
+            font-family: "Courier New", Courier, monospace;
             font-weight: bold;
-            font-size: 1.2rem;
-            border-top: 4px solid red;
-            border-bottom: 4px solid red;
+            text-transform: uppercase;
+            border-bottom: 2px solid red;
         }
+
         .marquee-text {
             display: inline-block;
-            animation: scroll 10s linear infinite;
-        }
-        @keyframes scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            white-space: nowrap;
+            animation: marquee 8s linear infinite;
+            font-size: 24px;
         }
 
-        /* EFFET 3 : FLOAT (THISTLE) */
-        .float {
-            animation: floating 3s ease-in-out infinite;
-        }
-        @keyframes floating {
-            0% { transform: translateY(0) scale(1.1); }
-            50% { transform: translateY(-20px) scale(1.1); }
-            100% { transform: translateY(0) scale(1.1); }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
-        /* STROBE CLICK */
+        /* 3. FLOATING THISTLE (Drifting) */
+        .thistle img {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* STROBE ANIMATION (Triggered by click) */
         .strobe-active {
-            animation: strobe-bg 0.1s infinite;
-        }
-        @keyframes strobe-bg {
-            0% { background-color: white; }
-            50% { background-color: red; }
-            100% { background-color: black; }
+            animation: strobe-animation 0.06s infinite !important;
         }
 
-        .mail-footer {
+        @keyframes strobe-animation {
+            0% { background-color: #f5bb00; } /* Jaune */
+            50% { background-color: #bf3100; } /* Rouge */
+            100% { background-color: #f5bb00; }
+        }
+
+        .footer {
             text-align: center;
-            padding: 80px;
+            padding: 60px;
             font-family: 'Courier New', monospace;
             font-size: 1.5rem;
             font-weight: bold;
-            background: black;
-            color: white;
+            background: #000;
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-    <!-- THE LARGE CURSOR ELEMENT -->
-    <div id="custom-cursor"></div>
-
-    <div class="content">
-        <div class="section vibrate">
-            <img src="skull.svg" alt="Skull">
-        </div>
-
-        <div class="marquee-container">
-            <div class="marquee-text">
-                JAUNE ROUGE - JAUNE ROUGE - JAUNE ROUGE - JAUNE ROUGE - JAUNE ROUGE - JAUNE ROUGE - JAUNE ROUGE - JAUNE ROUGE - 
-            </div>
-        </div>
-
-        <div class="section">
-            <img src="text.svg" alt="Jaune Rouge">
-        </div>
-
-        <div class="section float">
-            <img src="thistle.svg" alt="Thistle">
-        </div>
-
-        <div class="mail-footer">
-            CONTACT: JAUNERED@PROTON.ME
+    <!-- MARQUEE AT THE TOP -->
+    <div class="marquee-container">
+        <div class="marquee-text">
+            JAUNE ROUGE — NO LIMITS — 2024 — JAUNE ROUGE — NO LIMITS — 2024 — JAUNE ROUGE
         </div>
     </div>
 
+    <div class="main-container">
+        <!-- VIBRATING SKULL -->
+        <div class="section skull">
+            <img src="skull.svg" alt="Skull">
+        </div>
+
+        <!-- MIDDLE TEXT (Static) -->
+        <div class="section text-logo">
+            <img src="text.svg" alt="Jaune Rouge">
+        </div>
+
+        <!-- FLOATING THISTLE -->
+        <div class="section thistle">
+            <img src="thistle.svg" alt="Thistle">
+        </div>
+    </div>
+
+    <div class="footer">
+        CONTACT: JAUNERED@PROTON.ME
+    </div>
+
     <script>
-        const cursor = document.getElementById('custom-cursor');
         const body = document.body;
         let isStrobe = false;
-
-        // TRACK MOUSE MOVEMENT
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // STROBE ON CLICK
+        
+        // Active/Désactive le Strobe au clic
         window.addEventListener('click', () => {
             isStrobe = !isStrobe;
             if (isStrobe) {
                 body.classList.add('strobe-active');
-            } else {
-                body.classList.remove('strobe-active');
-                body.style.backgroundColor = "white";
+            } else { 
+                body.classList.remove('strobe-active'); 
+                body.style.backgroundColor = "white"; 
             }
         });
     </script>
